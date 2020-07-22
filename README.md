@@ -1,4 +1,4 @@
-# README
+# React Native Recipes
 
 ## Abstract
 
