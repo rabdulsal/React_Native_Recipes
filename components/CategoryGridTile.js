@@ -5,34 +5,39 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  Platform,
-  TouchableNativeFeedback
+  Pressable,
+  Platform
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const CategoryGridTile = props => {
-  let TouchComponent = TouchableOpacity;
+function CategoryGridTile({title, color, onPress }){
+  const navigation = useNavigation(); // Testing and example purposes
 
-  if (Platform.OS === 'android' && Platform.Version >= 21) {
-    TouchComponent = TouchableNativeFeedback;
-  }
+  // if (Platform.OS === 'android' && Platform.Version >= 21) {
+  //   TouchComponent = TouchableNativeFeedback;
+  // }
   return (
     <View
       style={styles.gridItem}
     >
-      <TouchComponent
-        style={{ flex: 1 }}
-        onPress={props.onSelect}
+      <Pressable
+        android_ripple={{color: '#ccc'}}
+        style={({ pressed }) => [
+          styles.button,
+          pressed ? styles.buttonPressed : null,
+        ]}
+        style={styles.button}
+        onPress={onPress}
       >
-        <View style={{...styles.container, ...{backgroundColor: props.color}}}>
+        <View style={[styles.container, {backgroundColor: color}]}>
           <Text
             style={styles.title}
             numberOfLines={2}
           >
-            {props.title}
+            {title}
           </Text>
         </View>
-      </TouchComponent>
+      </Pressable>
     </View>
   );
 }
@@ -40,30 +45,35 @@ const CategoryGridTile = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 10,
-    shadowColor: 'black',
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
     padding: 15,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end'
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  button: {
+    flex: 1
+  },
+  buttonPressed: {
+    opacity: 0.5
   },
   title: {
-    fontFamily: 'open-sans-bold',
+    // fontFamily: 'open-sans-bold',
+    fontWeight: 'bold',
     fontSize: 20,
-    textAlign: 'right'
+    // textAlign: 'right'
   },
   gridItem: {
     flex: 1,
     margin: 15,
     height: 150,
     borderRadius: 10,
-    overflow:
-      Platform.OS == 'android' && Platform.Version >= 21
-      ? 'hidden'
-      : 'visible',
-    elevation: 3
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 4,
+    overflow: Platform.OS === 'android' ? 'hidden' : 'visible'
   }
 });
 

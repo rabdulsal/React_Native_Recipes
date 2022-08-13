@@ -5,26 +5,33 @@ import {
   StyleSheet,
   Button,
   FlatList,
-  TouchableOpacity,
+  Pressable,
 } from 'react-native';
 
 import { CATEGORIES } from '../data/dummy-data';
 import CategoryGridTile from '../components/CategoryGridTile';
 
- const CategoriesScreen = props =>  {
-   const renderGridItem = (itemData) => {
+function pressHandler() {
+  props.navigation.navigate({
+    routeName: 'CategoryMeals',
+    params: {
+      categoryId: itemData.item.id
+    }
+  });
+}
+
+ function CategoriesScreen({ navigation }){
+   function renderGridItem(itemData) {
+     function pressHandler() {
+       navigation.navigate('CategoryMeals', {
+         categoryId: itemData.item.id,
+       });
+     }
      return (
        <CategoryGridTile
          title={itemData.item.title}
          color={itemData.item.color}
-         onSelect={() => {
-           props.navigation.navigate({
-             routeName: 'CategoryMeals',
-             params: {
-               categoryId: itemData.item.id
-             }
-           });
-         }}
+         onPress={pressHandler}
         />
      );
    }

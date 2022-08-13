@@ -1,24 +1,25 @@
 /* @flow */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Platform
+  Platform,
+  Pressable
 } from 'react-native';
-
-import { HeaderButton } from 'react-navigation-header-buttons';
-import { Ionicons } from '@expo/vector-icons';
+// import { Ionicons } from '@expo/vector-icons'; Throwing error?
 import Colors from '../constants/Colors';
 
-const CustomHeaderButton = props => {
+function CustomHeaderButton({ icon, handleButtonPress, color }) {
   return (
-    <HeaderButton {...props}
-      IconComponent={Ionicons}
-      iconSize={23}
-      color={Platform.OS === 'android' ? 'white' : Colors.primaryColor}
-    />
+    <Pressable
+      onPress={handleButtonPress}
+    >
+    <View>
+      <Text style={styles.button}>Overview</Text>
+      </View>
+    </Pressable>
   );
 }
 
@@ -26,6 +27,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  button: {
+    color: Colors.accentColor
+  }
 });
 
 export default CustomHeaderButton;
