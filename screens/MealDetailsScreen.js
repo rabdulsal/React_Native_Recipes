@@ -32,6 +32,7 @@ import Colors from '../constants/Colors'
              icon="star"
              handleButtonPress={handleButtonPress}
              color="white"
+             size={20}
              />
           );
        }

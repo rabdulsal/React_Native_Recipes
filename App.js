@@ -5,45 +5,76 @@ import { AppLoading } from 'expo';
 import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverViewScreen from './screens/MealsOverViewScreen';
 import MealDetailsScreen from './screens/MealDetailsScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import Colors from './constants/Colors'
+import CustomStyles from './constants/CustomStyles'
+import Ionicons from '@expo/vector-icons/Ionicons';
+// import Ionicons from '@expo/vector-icons/Ionicons';
 // const fetchFonts = () => {
 //   return Font.loadAsync({
 //     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
 //     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
 //   });
 // };
+
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return <Drawer.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: Colors.primaryBrown },
+      headerTintColor: 'white',
+      sceneContainerStyle: {backgroundColor: Colors.secondaryBrown},
+      drawerContentStyle: { backgroundColor: Colors.primaryBrown },
+      drawerInactiveTintColor: 'white',
+      drawerActiveTintColor: Colors.primaryBrown,
+      drawerActiveBackgroundColor: '#e4baa1'
+    }}
+    >
+    <Drawer.Screen
+      name="Categories"
+      component={CategoriesScreen}
+      options={{
+        title: 'All Categories',
+        drawerIcon: ({ color, size }) => (
+          <Ionicons name="list" color={color} size={size} />
+        ),
+      }}
+    />
+    <Drawer.Screen
+      name="Favorites"
+      component={FavoritesScreen}
+      options={{
+        drawerIcon: ({ color, size }) => (
+          <Ionicons name="star" color={color} size={size} />
+        ),
+      }}
+    />
+  </Drawer.Navigator>
+}
 
 export default function App() {
-
-  // const [fontLoaded, setFontLoaded] = useState(false);
-  //
-  // if (!fontLoaded) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={fetchFonts}
-  //       onFinish={() => setFontLoaded(true)}
-  //     />
-  //   );
-  // }
   return (
     <>
     <StatusBar style='light' />
     <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: '#351401' },
+            // CustomStyles.HeaderStyles
+            headerStyle: { backgroundColor: Colors.primaryBrown },
             headerTintColor: 'white',
-            contentStyle: {backgroundColor: '#3f2f25'}
+            contentStyle: {backgroundColor: Colors.secondaryBrown}
           }}
         >
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerNavigator}
             options={{
-              title: 'All Categories',
+              headerShown: false
 
             }}
             />

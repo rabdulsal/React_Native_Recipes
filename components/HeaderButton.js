@@ -8,16 +8,16 @@ import {
   Platform,
   Pressable
 } from 'react-native';
-// import { Ionicons } from '@expo/vector-icons'; Throwing error?
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../constants/Colors';
 
-function CustomHeaderButton({ icon, handleButtonPress, color }) {
+function CustomHeaderButton({ icon, handleButtonPress, color, size }) {
   return (
     <Pressable
       onPress={handleButtonPress}
     >
     <View>
-      <Text style={styles.button}>Overview</Text>
+      <Ionicons name={icon} size={size} color={color} />
       </View>
     </Pressable>
   );
