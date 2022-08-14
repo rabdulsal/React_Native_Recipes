@@ -13,11 +13,7 @@ function MealList({ mealsData }) {
 
   function renderMealItem(itemData) {
     const item = itemData.item;
-    // function selectMealHandler() {
-    //   navigation.navigate('MealDetails', {
-    //     mealId: item.id
-    //   });
-    // }
+
     const mealItemProps = {
       id: item.id,
       title: item.title,
