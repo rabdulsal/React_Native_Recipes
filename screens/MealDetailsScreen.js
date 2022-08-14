@@ -14,14 +14,25 @@ import HeaderButton from '../components/HeaderButton';
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFavorite, removeFavorite } from '../store/redux/favorites';
 
  function MealDetailsScreen({ navigation, route }) {
+
+   const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+   const dispatch = useDispatch();
+
    const mealId = route.params.mealId;
    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+   const mealIsFavorite = favoriteMealIds.includes(mealId);
 
-  function handleButtonPress() {
-    navigation.navigate("MealsCategories");
+  function changeFavoritesStatusHandler() {
+    if (mealIsFavorite) {
+      dispatch(removeFavorite({ id: mealId }));
+    } else {
+      dispatch(addFavorite({ id: mealId }));
+    }
   }
    useLayoutEffect(() => {
      navigation.setOptions({
@@ -30,14 +41,14 @@ import Colors from '../constants/Colors'
          return (
            <HeaderButton
              icon="star"
-             handleButtonPress={handleButtonPress}
+             handleButtonPress={changeFavoritesStatusHandler}
              color="white"
              size={20}
-             />
+            />
           );
        }
      });
-   }, [navigation, handleButtonPress]);
+   }, [navigation, changeFavoritesStatusHandler]);
 
 
     return (
@@ -62,7 +73,7 @@ import Colors from '../constants/Colors'
         </View>
 
         <Pressable
-          onPress={handleButtonPress}
+          onPress={changeFavoritesStatusHandler}
         >
             <Text
               style={styles.button}

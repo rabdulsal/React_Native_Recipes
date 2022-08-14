@@ -9,35 +9,37 @@ import {
 } from 'react-native';
 import MealItem from './MealItem';
 
-const MealList = props => {
-  const renderMealItem = itemData => {
+function MealList({ mealsData }) {
+
+  function renderMealItem(itemData) {
+    const item = itemData.item;
+    // function selectMealHandler() {
+    //   navigation.navigate('MealDetails', {
+    //     mealId: item.id
+    //   });
+    // }
+    const mealItemProps = {
+      id: item.id,
+      title: item.title,
+      imageURL: item.imageURL,
+      affordability: item.affordability,
+      complexity: item.complexity,
+      duration: item.duration
+    }
     return(
-      <MealItem
-        title={itemData.item.title}
-        image={itemData.item.imageURL}
-        duration={itemData.item.duration}
-        complexity={itemData.item.complexity}
-        affordability={itemData.item.affordability}
-        onSelectMeal={() => {
-          props.navigation.navigate({routeName: 'MealDetail', params: {
-            mealId: itemData.item.id
-          }})
-        }}
-       />
+      <MealItem {...mealItemProps} />
     );
   };
 
-  return (
-    <View style={styles.list}>
-      <Text>The CategoryMeals Screen!</Text>
-      <FlatList
-        data={props.listData}
-        keyExtractor={(item, index) => item.id}
-        renderItem={renderMealItem}
-        style={{width: '100%'}}
-     />
-    </View>
-  );
+   return (
+     <View style={styles.screen}>
+       <FlatList
+         data={mealsData}
+         keyExtractor={(item, index) => item.id}
+         renderItem={renderMealItem}
+      />
+     </View>
+   );
 }
 
 const styles = StyleSheet.create({
@@ -45,6 +47,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  screen: {
+    flex: 1,
+    padding: 16
   },
 });
 

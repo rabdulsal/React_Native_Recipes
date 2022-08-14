@@ -11,7 +11,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Colors from './constants/Colors'
 import CustomStyles from './constants/CustomStyles'
-import Ionicons from '@expo/vector-icons/Ionicons';
+// import Ionicons from '@expo/vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Provider } from 'react-redux';
+import { store } from './store/redux/store';
 // import Ionicons from '@expo/vector-icons/Ionicons';
 // const fetchFonts = () => {
 //   return Font.loadAsync({
@@ -61,33 +64,35 @@ export default function App() {
   return (
     <>
     <StatusBar style='light' />
-    <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            // CustomStyles.HeaderStyles
-            headerStyle: { backgroundColor: Colors.primaryBrown },
-            headerTintColor: 'white',
-            contentStyle: {backgroundColor: Colors.secondaryBrown}
-          }}
-        >
-          <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            options={{
-              headerShown: false
-
+    <Provider store={store}>
+      <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              // CustomStyles.HeaderStyles
+              headerStyle: { backgroundColor: Colors.primaryBrown },
+              headerTintColor: 'white',
+              contentStyle: {backgroundColor: Colors.secondaryBrown}
             }}
+          >
+            <Stack.Screen
+              name="Drawer"
+              component={DrawerNavigator}
+              options={{
+                headerShown: false
+
+              }}
+              />
+            <Stack.Screen
+              name="CategoryMeals"
+              component={MealsOverViewScreen}
             />
-          <Stack.Screen
-            name="CategoryMeals"
-            component={MealsOverViewScreen}
-          />
-          <Stack.Screen
-            name="MealDetails"
-            component={MealDetailsScreen}
-          />
-        </Stack.Navigator>
-    </NavigationContainer>
+            <Stack.Screen
+              name="MealDetails"
+              component={MealDetailsScreen}
+            />
+          </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
     </>
   );
 }

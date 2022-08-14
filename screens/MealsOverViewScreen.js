@@ -11,6 +11,7 @@ import { useRoute } from '@react-navigation/native'; // Test Code
 
 import { CATEGORIES, MEALS } from '../data/dummy-data';
 import MealItem from '../components/MealItem';
+import MealList from '../components/MealList';
 
  function MealsOverViewScreen({ navigation, route })  {
    // const route = useRoute(); Test code
@@ -27,39 +28,9 @@ import MealItem from '../components/MealItem';
      });
    }, [catId, navigation]);
 
-
-
-   function renderMealItem(itemData) {
-     const item = itemData.item;
-     function selectMealHandler() {
-       navigation.navigate('MealDetails', {
-         mealId: item.id
-       });
-     }
-     const mealItemProps = {
-       title: item.title,
-       imageURL: item.imageURL,
-       affordability: item.affordability,
-       complexity: item.complexity,
-       duration: item.duration
-     }
-     return(
-       <MealItem
-        {...mealItemProps}
-        onSelectMeal={selectMealHandler}
-       />
-     );
-   };
-
-    return (
-      <View style={styles.screen}>
-        <FlatList
-          data={displayedMeals}
-          keyExtractor={(item, index) => item.id}
-          renderItem={renderMealItem}
-       />
-      </View>
-    );
+   return (
+     <MealList mealsData={displayedMeals} />
+   )
 }
 
 const styles = StyleSheet.create({
